@@ -16,5 +16,9 @@ func main() {
 		return c.SendString("Hello, World from Cristian this is a Software project!")
 	})
 
+	app.Get("/yorman", func(c *fiber.Ctx) error {
+        return c.SendString("Hello, World from Yorman!")
+    })
+
 	app.Listen(":5000")
 }
