@@ -17,8 +17,12 @@ func main() {
 	})
 
 	app.Get("/yorman", func(c *fiber.Ctx) error {
-        return c.SendString("Hello, World from Yorman!")
-    })
+		return c.SendString("Hello, World from Yorman!")
+	})
+
+	app.Get("/camila", func(c *fiber.Ctx) error {
+		return c.SendString("Hello, World from Camila!")
+	})
 
 	app.Listen(":5000")
 }
