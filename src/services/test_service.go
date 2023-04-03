@@ -11,8 +11,9 @@ import (
 
 func GetDataTest() {
 	collection := database.Db.GetCollection("FarmLot")
+	filter := bson.M{}
 
-	farms, err := collection.Find(context.Background(), nil)
+	farms, err := collection.Find(context.Background(), filter)
 	if err != nil {
 		fmt.Println(err, "Error en el find")
 
