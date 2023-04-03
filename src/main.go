@@ -2,27 +2,17 @@ package main
 
 import (
 	"github.com/gofiber/fiber/v2"
+
+	"AgroXpert-Backend/src/configs"
+	"AgroXpert-Backend/src/database"
+	"AgroXpert-Backend/src/routes"
 )
 
 func main() {
-
 	app := fiber.New()
-
-	app.Get("/samuel", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World from Samuel!")
-	})
-
-	app.Get("/cristian", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World from Cristian this is a Software project!")
-	})
-
-	app.Get("/yorman", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World from Yorman!")
-	})
-
-	app.Get("/camila", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World from Camila!")
-	})
-
+	routes.SetupRoutes(app)
 	app.Listen(":5000")
+
+	configs.InitEnv()
+	database.InitMongoConnection()
 }

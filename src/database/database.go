@@ -3,10 +3,17 @@ package database
 import (
 	"context"
 	"log"
+	"os"
+	"sync"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+)
+
+var (
+	Db   *MongoDB
+	once sync.Once
 )
 
 type MongoDB struct {
@@ -14,26 +21,35 @@ type MongoDB struct {
 	database *mongo.Database
 }
 
-func NewMongoDB(uri, dbName, collectionName string) (*MongoDB, error) {
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017/")
+func InitMongoConnection() error {
+	urlDb := os.Getenv("DATABASE_URL")
+	nameDb := os.Getenv("DATABASE_NAME")
+	var err error
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
+	once.Do(func() {
+		clientOptions := options.Client().ApplyURI(urlDb)
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		defer cancel()
 
-	client, err := mongo.Connect(ctx, clientOptions)
-	if err != nil {
-		log.Fatal(err)
-	}
+		client, err := mongo.Connect(ctx, clientOptions)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	err = client.Ping(ctx, nil)
-	if err != nil {
-		return nil, err
-	}
+		database := client.Database(nameDb)
+		Db = &MongoDB{
+			client:   client,
+			database: database,
+		}
+	})
 
-	database := client.Database(dbName)
+	return err
+}
 
-	return &MongoDB{
-		client:   client,
-		database: database,
-	}, nil
+func GetCollection(collection string) *mongo.Collection {
+	return Db.database.Collection(collection)
+}
+
+func (m *MongoDB) CloseConnection() error {
+	return m.client.Disconnect(context.Background())
 }
