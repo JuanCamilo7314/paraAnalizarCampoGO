@@ -1,6 +1,10 @@
 package controllers
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"AgroXpert-Backend/src/services"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 func GetSamuel(c *fiber.Ctx) error {
 	return c.SendString("Hello, World from Samuel!")
@@ -16,4 +20,9 @@ func GetYorman(c *fiber.Ctx) error {
 
 func GetCamila(c *fiber.Ctx) error {
 	return c.SendString("Hello, World from Camila!")
+}
+
+func GetDataTest(c *fiber.Ctx) error {
+	services.GetDataTest()
+	return c.SendString("Mira la consola, pueden salir cositas")
 }

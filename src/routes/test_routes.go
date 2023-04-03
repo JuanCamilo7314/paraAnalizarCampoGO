@@ -13,4 +13,5 @@ func SetupTestRoutes(app *fiber.App) {
 	route.Get("/cristian", controllers.GetCristian)
 	route.Get("/yorman", controllers.GetYorman)
 	route.Get("/camila", controllers.GetCamila)
+	route.Get("/getDataTest", controllers.GetDataTest)
 }
