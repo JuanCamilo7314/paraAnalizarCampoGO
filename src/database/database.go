@@ -21,10 +21,9 @@ type MongoDB struct {
 	database *mongo.Database
 }
 
-func InitMongoConnection() error {
+func InitMongoConnection() {
 	urlDb := os.Getenv("DATABASE_URL")
 	nameDb := os.Getenv("DATABASE_NAME")
-	var err error
 
 	once.Do(func() {
 		clientOptions := options.Client().ApplyURI(urlDb)
@@ -42,14 +41,12 @@ func InitMongoConnection() error {
 			database: database,
 		}
 	})
-
-	return err
 }
 
-func GetCollection(collection string) *mongo.Collection {
-	return Db.database.Collection(collection)
+func (db *MongoDB) GetCollection(collection string) *mongo.Collection {
+	return db.database.Collection(collection)
 }
 
-func (m *MongoDB) CloseConnection() error {
-	return m.client.Disconnect(context.Background())
+func (db *MongoDB) CloseConnection() error {
+	return db.client.Disconnect(context.Background())
 }
