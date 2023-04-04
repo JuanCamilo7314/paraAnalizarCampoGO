@@ -6,7 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func SetupTestRoutes(app *fiber.App) {
+func TestRoutes(app *fiber.App) {
 	route := app.Group("/test")
 
 	route.Get("/samuel", controllers.GetSamuel)
