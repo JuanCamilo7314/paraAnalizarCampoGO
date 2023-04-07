@@ -8,3 +8,7 @@ import (
 func GetAllFinalProductions() ([]models.FinalProduction, error) {
 	return repositories.GetAllFinalProductions()
 }
+
+func GetOneFinalProduction(finalProductionID string) (models.FinalProduction, error) {
+	return repositories.GetOneFinalProduction(finalProductionID)
+}
