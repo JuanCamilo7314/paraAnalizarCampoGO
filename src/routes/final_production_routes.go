@@ -10,6 +10,6 @@ func FinalProductionRoutes(app *fiber.App) {
 	route := app.Group("/final-production")
 
 	route.Get("/", controllers.GetAllFinalProductions)
-	route.Get("/:id", controllers.GetFinalProduction)
+	//route.Get("/:id", controllers.GetFinalProduction)
 
 }

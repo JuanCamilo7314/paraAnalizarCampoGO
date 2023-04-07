@@ -7,14 +7,14 @@ import (
 )
 
 type FinalProduction struct {
-	ID              primitive.ObjectID `bson:"_id,omitempty"`
-	Date            time.Time          `bson:"date,omitempty"`
-	TotalProduction int                `bson:"totalProduction,omitempty"`
-	ExportMarket    int                `bson:"exportMarket,omitempty"`
-	NationalMarket  int                `bson:"nationalMarket,omitempty"`
-	Waste           int                `bson:"waste,omitempty"`
+	ID              primitive.ObjectID `bson:"_id" json:"id"`
+	Date            time.Time          `bson:"date" json:"date"`
+	TotalProduction int                `bson:"totalProduction" json:"totalProduction"`
+	ExportMarket    int                `bson:"exportMarket" json:"exportMarket"`
+	NationalMarket  int                `bson:"nationalMarket" json:"nationalMarket"`
+	Waste           int                `bson:"waste" json:"waste"`
 	CaliberDivision []struct {
-		Category string `bson:"category,omitempty"`
-		Quantity int    `bson:"quantity,omitempty"`
-	} `bson:"caliberDivision,omitempty"`
+		Category string `bson:"category" json:"category"`
+		Quantity int    `bson:"quantity" json:"quantity"`
+	} `bson:"caliberDivision" json:"caliberDivision"`
 }
