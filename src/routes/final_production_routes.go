@@ -11,5 +11,4 @@ func FinalProductionRoutes(app *fiber.App) {
 
 	route.Get("/", controllers.GetAllFinalProductions)
 	route.Get("/:id", controllers.GetOneFinalProduction)
-
 }
