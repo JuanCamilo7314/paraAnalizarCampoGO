@@ -1,0 +1,507 @@
+/*Farms Lots Example*/
+[
+    {
+        "_id": {
+            "$oid": "6427288955de30b33f903f06"
+        },
+        "nameLot": "String",
+        "numberTrees": 0,
+        "treesAge": 0,
+        "averageFruitWeight": 0,
+        "productionDate": {
+            "primary": {
+                "inital": {
+                    "$date": "2022-02-03T05:00:00.000Z"
+                },
+                "final": {
+                    "$date": "2022-02-04T05:00:00.000Z"
+                }
+            },
+            "secundary": {
+                "inital": {
+                    "$date": "2022-02-10T05:00:00.000Z"
+                },
+                "final": {
+                    "$date": "2022-02-11T05:00:00.000Z"
+                }
+            }
+        }
+    },
+    {
+        "_id": {
+            "$oid": "6430928ce6ae07dbea1af4f5"
+        },
+        "nameLot": "Lote El 10",
+        "numberTrees": 500,
+        "treesAge": 3,
+        "averageFruitWeight": 130,
+        "productionDate": {
+            "primary": {
+                "inital": {
+                    "$date": "2022-06-15T05:00:00.000Z"
+                },
+                "final": {
+                    "$date": "2022-07-15T05:00:00.000Z"
+                }
+            },
+            "secundary": {
+                "inital": {
+                    "$date": "2022-10-10T05:00:00.000Z"
+                },
+                "final": {
+                    "$date": "2022-11-11T05:00:00.000Z"
+                }
+            }
+        }
+    },
+    {
+        "_id": {
+            "$oid": "643092d9e6ae07dbea1af4f6"
+        },
+        "nameLot": "Lote pequeño",
+        "numberTrees": 100,
+        "treesAge": 7,
+        "averageFruitWeight": 120,
+        "productionDate": {
+            "primary": {
+                "inital": {
+                    "$date": "2022-06-10T05:00:00.000Z"
+                },
+                "final": {
+                    "$date": "2022-07-10T05:00:00.000Z"
+                }
+            },
+            "secundary": {
+                "inital": {
+                    "$date": "2022-10-20T05:00:00.000Z"
+                },
+                "final": {
+                    "$date": "2022-11-21T05:00:00.000Z"
+                }
+            }
+        }
+    },
+    {
+        "_id": {
+            "$oid": "643093abe6ae07dbea1af4f7"
+        },
+        "nameLot": "Lote Top",
+        "numberTrees": 200,
+        "treesAge": 6,
+        "averageFruitWeight": 140,
+        "productionDate": {
+            "primary": {
+                "inital": {
+                    "$date": "2022-05-10T05:00:00.000Z"
+                },
+                "final": {
+                    "$date": "2022-06-01T05:00:00.000Z"
+                }
+            },
+            "secundary": {
+                "inital": {
+                    "$date": "2022-10-10T05:00:00.000Z"
+                },
+                "final": {
+                    "$date": "2022-12-01T05:00:00.000Z"
+                }
+            }
+        }
+    }
+]
+/*Estimates Example*/
+[
+    {
+        "_id": {
+            "$oid": "6428761f20272af94d873b63"
+        },
+        "date": {
+            "$date": "2022-02-03T05:00:00.000Z"
+        },
+        "numTrees": 0,
+        "totalFruitsEstimates": 0,
+        "averageFruits": 0,
+        "estimatedProduction": 0,
+        "treesAssessed": [
+            {
+                "numFruits": 0,
+                "numQuartiles": 0
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "6430b352e6ae07dbea1af512"
+        },
+        "date": {
+            "$date": "2022-08-22T00:00:00.000Z"
+        },
+        "numTrees": 10,
+        "totalFruitsEstimates": 63200,
+        "averageFruits": 632,
+        "estimatedProduction": 7584,
+        "treesAssessed": [
+            {
+                "numFruits": 150,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 320,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 600,
+                "numQuartiles": 4
+            },
+            {
+                "numFruits": 160,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 170,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 310,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 315,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 160,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 305,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 330,
+                "numQuartiles": 2
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "6430b59de6ae07dbea1af517"
+        },
+        "date": {
+            "$date": "2022-09-22T00:00:00.000Z"
+        },
+        "numTrees": 10,
+        "totalFruitsEstimates": 63370,
+        "averageFruits": 633.7,
+        "estimatedProduction": 7604,
+        "treesAssessed": [
+            {
+                "numFruits": 152,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 310,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 597,
+                "numQuartiles": 4
+            },
+            {
+                "numFruits": 165,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 175,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 320,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 305,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 156,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 311,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 328,
+                "numQuartiles": 2
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "6430b6d1e6ae07dbea1af51a"
+        },
+        "date": {
+            "$date": "2022-10-15T00:00:00.000Z"
+        },
+        "numTrees": 10,
+        "totalFruitsEstimates": 62660,
+        "averageFruits": 626.6,
+        "estimatedProduction": 7519,
+        "treesAssessed": [
+            {
+                "numFruits": 150,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 305,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 590,
+                "numQuartiles": 4
+            },
+            {
+                "numFruits": 160,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 180,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 322,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 303,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 155,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 310,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 308,
+                "numQuartiles": 2
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "6430bdede6ae07dbea1af51d"
+        },
+        "date": {
+            "$date": "2021-03-22T00:00:00.000Z"
+        },
+        "numTrees": 15,
+        "totalFruitsEstimates": 137300,
+        "averageFruits": 686.5,
+        "estimatedProduction": 19222,
+        "treesAssessed": [
+            {
+                "numFruits": 170,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 340,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 510,
+                "numQuartiles": 3
+            },
+            {
+                "numFruits": 172,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 180,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 330,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 335,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 180,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 185,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 160,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 175,
+                "numQuartiles": 1
+            },
+            {
+                "numFruits": 350,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 340,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 330,
+                "numQuartiles": 2
+            },
+            {
+                "numFruits": 170,
+                "numQuartiles": 1
+            }
+        ]
+    }
+]
+/*Final production Example*/
+[
+    {
+        "_id": {
+            "$oid": "6428742620272af94d873b61"
+        },
+        "date": {
+            "$date": "2022-02-03T05:00:00.000Z"
+        },
+        "totalProduction": 0,
+        "exportMarket": 0,
+        "nationalMarket": 0,
+        "waste": 0,
+        "caliberDivision": [
+            {
+                "category": "",
+                "quantity": 0
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "6430ab83e6ae07dbea1af50a"
+        },
+        "date": {
+            "$date": "2022-11-03T05:00:00.000Z"
+        },
+        "totalProduction": 7596,
+        "exportMarket": 3338,
+        "nationalMarket": 4208,
+        "waste": 50,
+        "caliberDivision": [
+            {
+                "category": "8",
+                "quantity": 81
+            },
+            {
+                "category": "20",
+                "quantity": 132
+            },
+            {
+                "category": "22",
+                "quantity": 568
+            },
+            {
+                "category": "24",
+                "quantity": 1126
+            },
+            {
+                "category": "26",
+                "quantity": 284
+            },
+            {
+                "category": "28",
+                "quantity": 680
+            },
+            {
+                "category": "30",
+                "quantity": 467
+            }
+        ]
+    }
+]
+/* Harvest Example */
+[
+    {
+        "_id": {
+            "$oid": "6428735a20272af94d873b60"
+        },
+        "type": "",
+        "idFarmLot": {
+            "$oid": "6428735a20272af94d873b60"
+        },
+        "evaluationStartDate": {
+            "$date": "2023-03-28T00:00:00.000Z"
+        },
+        "evaluationEndDate": {
+            "$date": "2023-04-27T00:00:00.000Z"
+        },
+        "summaryFinalProduction": {
+            "$oid": "6428735a20272af94d873b60"
+        },
+        "estimates ": [
+            {
+                "$oid": "6428735a20272af94d873b60"
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "6430a192e6ae07dbea1af506"
+        },
+        "type": "primary",
+        "idFarmLot": {
+            "$oid": "643092d9e6ae07dbea1af4f6"
+        },
+        "evaluationStartDate": {
+            "$date": "2021-02-22T00:00:00.000Z"
+        },
+        "evaluationEndDate": {
+            "$date": null
+        },
+        "summaryFinalProduction": null,
+        "estimates ": [
+            {
+                "$oid": "6430bdede6ae07dbea1af51d"
+            }
+        ]
+    },
+    {
+        "_id": {
+            "$oid": "6430a9a0e6ae07dbea1af507"
+        },
+        "type": "secundary",
+        "idFarmLot": {
+            "$oid": "643092d9e6ae07dbea1af4f6"
+        },
+        "evaluationStartDate": {
+            "$date": "2022-08-22T00:00:00.000Z"
+        },
+        "evaluationEndDate": {
+            "$date": "2022-10-22T00:00:00.000Z"
+        },
+        "summaryFinalProduction": {
+            "$oid": "6430ab83e6ae07dbea1af50a"
+        },
+        "estimates ": [
+            {
+                "$oid": "6430b352e6ae07dbea1af512"
+            },
+            {
+                "$oid": "6430b59de6ae07dbea1af517"
+            },
+            {
+                "$oid": "6430b6d1e6ae07dbea1af51a"
+            }
+        ]
+    }
+]

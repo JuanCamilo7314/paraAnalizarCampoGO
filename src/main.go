@@ -11,10 +11,16 @@ import (
 func main() {
 	configs.InitEnv()
 	database.InitMongoConnection()
-
 	app := fiber.New()
-	routes.SetupTestRoutes(app)
+
+	SetupRoutes(app)
+
 	app.Listen(":5000")
 
 	defer database.Db.CloseConnection()
+}
+
+func SetupRoutes(app *fiber.App) {
+	routes.TestRoutes(app)
+	routes.FinalProductionRoutes(app)
 }
