@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"AgroXpert-Backend/src/services"
-
 	"github.com/gofiber/fiber/v2"
+
+	"AgroXpert-Backend/src/services"
 )
 
 func GetSamuel(c *fiber.Ctx) error {
