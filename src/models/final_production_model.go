@@ -13,8 +13,10 @@ type FinalProduction struct {
 	ExportMarket    int                `bson:"exportMarket" json:"exportMarket"`
 	NationalMarket  int                `bson:"nationalMarket" json:"nationalMarket"`
 	Waste           int                `bson:"waste" json:"waste"`
-	CaliberDivision []struct {
-		Category string `bson:"category" json:"category"`
-		Quantity int    `bson:"quantity" json:"quantity"`
-	} `bson:"caliberDivision" json:"caliberDivision"`
+	CaliberDivision []CaliberDivision  `bson:"caliberDivision" json:"caliberDivision"`
+}
+
+type CaliberDivision struct {
+	Category string `bson:"category" json:"category"`
+	Quantity int    `bson:"quantity" json:"quantity"`
 }
