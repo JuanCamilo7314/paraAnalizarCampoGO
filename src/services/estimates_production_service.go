@@ -23,5 +23,10 @@ func CreateEstimate(estimateReq models.ReqEstimate) (models.EstimateModel, error
 
 	newEstimate.CreateEstimation(estimateReq.TreesAssessed, infFarmLot)
 
-	return newEstimate, nil
+	estimateCreated, err := repositories.CreateNewEstimation(newEstimate)
+	if err != nil {
+		return estimateCreated, err
+	}
+
+	return estimateCreated, nil
 }
