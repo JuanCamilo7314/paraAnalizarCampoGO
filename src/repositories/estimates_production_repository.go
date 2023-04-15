@@ -29,6 +29,7 @@ func GetAllEstimatesProductions() ([]models.EstimatesProduct, error) {
 			return nil, fmt.Errorf("error decode estimates productions: %v", err)
 		}
 
+		fmt.Printf("Estimates of Production: %v", modelEstimatesProduction)
 		resultEstimatesProductions = append(resultEstimatesProductions, modelEstimatesProduction)
 	}
 
@@ -37,7 +38,7 @@ func GetAllEstimatesProductions() ([]models.EstimatesProduct, error) {
 
 func GetOneEstimatesProduction(estimatesProductionID string) (models.EstimatesProduct, error) {
 	var modelEstimatesProduction models.EstimatesProduct
-	collection := database.Db.GetCollection("EstimatesProduct")
+	collection := database.Db.GetCollection("Estimates")
 
 	id, err := primitive.ObjectIDFromHex(estimatesProductionID)
 	if err != nil {
