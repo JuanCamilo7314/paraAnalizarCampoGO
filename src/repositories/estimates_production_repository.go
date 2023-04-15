@@ -15,7 +15,7 @@ import (
 func GetAllEstimatesProductions() ([]models.EstimateModel, error) {
 	var resultEstimatesProductions []models.EstimateModel
 	var modelEstimatesProduction models.EstimateModel
-	collection := database.Db.GetCollection("EstimatesProduct")
+	collection := database.Db.GetCollection("Estimates")
 	filter := bson.M{}
 
 	estimatesProductions, err := collection.Find(context.Background(), filter)
