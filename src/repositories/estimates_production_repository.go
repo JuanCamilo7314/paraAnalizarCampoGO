@@ -29,7 +29,6 @@ func GetAllEstimatesProductions() ([]models.EstimateModel, error) {
 			return nil, fmt.Errorf("error decode estimates productions: %v", err)
 		}
 
-		fmt.Printf("Estimates of Production: %v", modelEstimatesProduction)
 		resultEstimatesProductions = append(resultEstimatesProductions, modelEstimatesProduction)
 	}
 

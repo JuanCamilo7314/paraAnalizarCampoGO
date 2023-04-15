@@ -35,7 +35,7 @@ func GetAllFinalProductions() ([]models.FinalProduction, error) {
 	return resultFinalProductions, nil
 }
 
-func GetOneFinalProduction(finalProductionID string) (models.FinalProduction, error) {
+func  GetOneFinalProduction(finalProductionID string) (models.FinalProduction, error) {
 	var modelFinalProduction models.FinalProduction
 	collection := database.Db.GetCollection("FinalProduction")
 

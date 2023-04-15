@@ -1,6 +1,7 @@
 package models
 
 import (
+	"math"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -11,7 +12,7 @@ type EstimateModel struct {
 	Date                 time.Time          `json:"date" bson:"date"`
 	NumTrees             int                `json:"numTrees" bson:"numTrees"`
 	TotalFruitsEstimates int                `json:"totalFruitsEstimates" bson:"totalFruitsEstimates"`
-	AverageFruits        float32            `json:"averageFruits" bson:"averageFruits"`
+	AverageFruits        int                `json:"averageFruits" bson:"averageFruits"`
 	EstimatedProduction  int                `json:"estimatedProduction" bson:"estimatedProduction"`
 	TreesAssessed        []TreesAssessed    `json:"treesAssessed" bson:"treesAssessed"`
 }
@@ -31,24 +32,26 @@ func (estimate *EstimateModel) CreateEstimation(treesAssesed []TreesAssessed, in
 }
 
 func (estimate *EstimateModel) setAverageFruitsPerTree(treesAssesed []TreesAssessed) {
-	var totalFruits float32
+	var totalFruits int
 	for _, tree := range treesAssesed {
-		totalFruits += float32(estimate.calculateNumFruitsPerTree(tree))
+		totalFruits += estimate.calculateNumFruitsPerTree(tree)
 	}
 
-	estimate.AverageFruits = totalFruits / float32(len(treesAssesed))
+	average := float64(totalFruits) / float64(len(treesAssesed))
+	estimate.AverageFruits = int(math.Round(average))
 }
 
 func (estimate *EstimateModel) setTotalFruitsEstimates(TreesFarmLot int) {
-	totalFruitsEstimates := int(float64(estimate.AverageFruits) * float64(TreesFarmLot))
-	estimate.TotalFruitsEstimates = totalFruitsEstimates
+	totalFruitsEstimates := float64(estimate.AverageFruits) * float64(TreesFarmLot)
+	estimate.TotalFruitsEstimates = int(math.Round(totalFruitsEstimates))
 }
 
 func (estimate *EstimateModel) setEstimateProduction(fruitWeight float32) {
-	estimateProduction := int(float64(estimate.TotalFruitsEstimates) * float64(fruitWeight))
-	estimate.EstimatedProduction = estimateProduction
+	estimateProduction := float64(estimate.TotalFruitsEstimates) * float64(fruitWeight) / float64(1000)
+	estimate.EstimatedProduction = int(math.Round(estimateProduction))
 }
 
-func (estimate *EstimateModel) calculateNumFruitsPerTree(treesAssese TreesAssessed) float32 {
-	return float32(treesAssese.NumFruits) * float32(4/treesAssese.NumQuartiles)
+func (estimate *EstimateModel) calculateNumFruitsPerTree(treesAssese TreesAssessed) int {
+	fruitPerTree := float64(treesAssese.NumFruits) * float64(4.0/treesAssese.NumQuartiles)
+	return int(math.Round(fruitPerTree))
 }

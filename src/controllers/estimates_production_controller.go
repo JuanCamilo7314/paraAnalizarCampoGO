@@ -34,7 +34,7 @@ func GetAllEstimatesProductions(c *fiber.Ctx) error {
 
 func GetOneEstimatesProduction(c *fiber.Ctx) error {
 	estimatesProductionID := c.Params("id")
-	estimatesProduction, err := services.GetOneFinalProduction(estimatesProductionID)
+	estimatesProduction, err := services.GetOneEstimatesProduction(estimatesProductionID)
 
 	if err == mongo.ErrNoDocuments {
 		return c.Status(fiber.StatusNotFound).JSON(models.Response{
@@ -55,4 +55,38 @@ func GetOneEstimatesProduction(c *fiber.Ctx) error {
 		Message: "Estimates of Production successfully",
 		Data:    estimatesProduction,
 	})
+}
+
+func PostNewEstimate(c *fiber.Ctx) error {
+	var estimateReq models.ReqEstimate
+
+	if err := c.BodyParser(&estimateReq); err != nil {
+		return c.Status(400).JSON(models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+	}
+
+	if err := estimateReq.ValidateEstimate(); err != nil {
+		return c.Status(400).JSON(models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+	}
+
+	estimateResult, err := services.CreateEstimate(estimateReq)
+
+	if err != nil {
+		return c.Status(400).JSON(models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+	}
+
+	return c.Status(200).JSON(models.Response{
+		Success: true,
+		Message: "Estimate created successfully",
+		Data:    estimateResult,
+	})
+
 }
