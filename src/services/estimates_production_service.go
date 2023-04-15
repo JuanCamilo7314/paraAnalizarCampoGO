@@ -30,3 +30,7 @@ func CreateEstimate(estimateReq models.ReqEstimate) (models.EstimateModel, error
 
 	return estimateCreated, nil
 }
+
+func GetEstimatesPerHarvest(reqIds models.ReqIdsEstimates) ([]models.EstimateModel, error) {
+	return repositories.GetEstimatesPerHarvest(reqIds)
+}

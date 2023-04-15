@@ -88,5 +88,37 @@ func PostNewEstimate(c *fiber.Ctx) error {
 		Message: "Estimate created successfully",
 		Data:    estimateResult,
 	})
+}
 
+func EstimatesPerHarvest(c *fiber.Ctx) error {
+	var reqIds models.ReqIdsEstimates
+
+	if err := c.BodyParser(&reqIds); err != nil {
+		return c.Status(400).JSON(models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+	}
+
+	estimatesProduction, err := services.GetEstimatesPerHarvest(reqIds)
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+	}
+
+	if len(estimatesProduction) == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(models.Response{
+			Success: false,
+			Message: "Estimates of Production list not found",
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(models.Response{
+		Success: true,
+		Message: "Estimates of Production list successfully",
+		Data:    estimatesProduction,
+	})
 }
