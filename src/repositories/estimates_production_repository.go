@@ -79,3 +79,26 @@ func CreateNewEstimation(newEstimation models.EstimateModel) (models.EstimateMod
 
 	return newEstimation, nil
 }
+
+func GetEstimatesPerHarvest(reqIds models.ReqIdsEstimates) ([]models.EstimateModel, error) {
+	var resultEstimatesProductions []models.EstimateModel
+	var modelEstimatesProduction models.EstimateModel
+	collection := database.Db.GetCollection("Estimates")
+	filter := bson.M{"_id": bson.M{"$in": reqIds.Ids}}
+
+	estimatesProductions, err := collection.Find(context.Background(), filter)
+	if err != nil {
+		return nil, fmt.Errorf("error fiend all estimates of productions: %v", err)
+	}
+
+	for estimatesProductions.Next(context.Background()) {
+		err := estimatesProductions.Decode(&modelEstimatesProduction)
+		if err != nil {
+			return nil, fmt.Errorf("error decode estimates productions: %v", err)
+		}
+
+		resultEstimatesProductions = append(resultEstimatesProductions, modelEstimatesProduction)
+	}
+
+	return resultEstimatesProductions, nil
+}

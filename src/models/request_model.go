@@ -1,6 +1,10 @@
 package models
 
-import "errors"
+import (
+	"errors"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type ReqEstimate struct {
 	IdFarmLot     string          `json:"idFarm"`
@@ -18,4 +22,8 @@ func (req *ReqEstimate) ValidateEstimate() error {
 	}
 
 	return nil
+}
+
+type ReqIdsEstimates struct {
+	Ids []primitive.ObjectID `json:"ids"`
 }
