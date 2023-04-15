@@ -5,10 +5,10 @@ import (
 	"AgroXpert-Backend/src/repositories"
 )
 
-func GetAllEstimatesProductions() ([]models.EstimatesProduct, error) {
+func GetAllEstimatesProductions() ([]models.EstimateModel, error) {
 	return repositories.GetAllEstimatesProductions()
 }
 
-func GetOneEstimatesProduction(estimatesProductionID string) (models.EstimatesProduct, error) {
+func GetOneEstimatesProduction(estimatesProductionID string) (models.EstimateModel, error) {
 	return repositories.GetOneEstimatesProduction(estimatesProductionID)
 }

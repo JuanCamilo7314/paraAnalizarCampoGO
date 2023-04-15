@@ -11,4 +11,5 @@ func EstimatesProductionRoutes(app *fiber.App) {
 
 	route.Get("/", controllers.GetAllEstimatesProductions)
 	route.Get("/:id", controllers.GetOneEstimatesProduction)
+	route.Post("/", controllers.PostNewEstimate)
 }

@@ -12,9 +12,9 @@ import (
 	"AgroXpert-Backend/src/models"
 )
 
-func GetAllEstimatesProductions() ([]models.EstimatesProduct, error) {
-	var resultEstimatesProductions []models.EstimatesProduct
-	var modelEstimatesProduction models.EstimatesProduct
+func GetAllEstimatesProductions() ([]models.EstimateModel, error) {
+	var resultEstimatesProductions []models.EstimateModel
+	var modelEstimatesProduction models.EstimateModel
 	collection := database.Db.GetCollection("EstimatesProduct")
 	filter := bson.M{}
 
@@ -36,24 +36,24 @@ func GetAllEstimatesProductions() ([]models.EstimatesProduct, error) {
 	return resultEstimatesProductions, nil
 }
 
-func GetOneEstimatesProduction(estimatesProductionID string) (models.EstimatesProduct, error) {
-	var modelEstimatesProduction models.EstimatesProduct
+func GetOneEstimatesProduction(estimatesProductionID string) (models.EstimateModel, error) {
+	var modelEstimatesProduction models.EstimateModel
 	collection := database.Db.GetCollection("Estimates")
 
 	id, err := primitive.ObjectIDFromHex(estimatesProductionID)
 	if err != nil {
-		return models.EstimatesProduct{}, fmt.Errorf("error convert id: %v", err)
+		return models.EstimateModel{}, fmt.Errorf("error convert id: %v", err)
 	}
 
 	filter := bson.M{"_id": id}
 	finalProduction := collection.FindOne(context.Background(), filter)
 	err = finalProduction.Decode(&modelEstimatesProduction)
 	if err == mongo.ErrNoDocuments {
-		return models.EstimatesProduct{}, err
+		return models.EstimateModel{}, err
 	}
 
 	if err != nil {
-		return models.EstimatesProduct{}, fmt.Errorf("error decode estimates production: %v", err)
+		return models.EstimateModel{}, fmt.Errorf("error decode estimates production: %v", err)
 	}
 
 	return modelEstimatesProduction, nil
