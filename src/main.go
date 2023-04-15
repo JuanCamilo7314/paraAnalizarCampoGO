@@ -5,6 +5,7 @@ import (
 
 	"AgroXpert-Backend/src/configs"
 	"AgroXpert-Backend/src/database"
+	"AgroXpert-Backend/src/middlewares"
 	"AgroXpert-Backend/src/routes"
 )
 
@@ -12,7 +13,7 @@ func main() {
 	configs.InitEnv()
 	database.InitMongoConnection()
 	app := fiber.New()
-
+	app.Use(middlewares.AccessOriginAnywhere)
 	SetupRoutes(app)
 
 	app.Listen(":5000")
@@ -25,4 +26,5 @@ func SetupRoutes(app *fiber.App) {
 	routes.FinalProductionRoutes(app)
 	routes.FarmLotRoutes(app)
 	routes.EstimatesRoutes(app)
+	routes.EstimatesProductionRoutes(app)
 }
