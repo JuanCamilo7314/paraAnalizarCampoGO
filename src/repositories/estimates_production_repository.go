@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -82,7 +83,7 @@ func CreateNewEstimation(newEstimation models.EstimateModel) (models.EstimateMod
 
 func GetEstimatesPerHarvest(reqIds models.ReqIdsEstimates) ([]models.EstimateModel, error) {
 	var resultEstimatesProductions []models.EstimateModel
-	var modelEstimatesProduction models.EstimateModel
+	var estimateProduction models.EstimateModel
 	collection := database.Db.GetCollection("Estimates")
 	filter := bson.M{"_id": bson.M{"$in": reqIds.Ids}}
 
@@ -92,13 +93,34 @@ func GetEstimatesPerHarvest(reqIds models.ReqIdsEstimates) ([]models.EstimateMod
 	}
 
 	for estimatesProductions.Next(context.Background()) {
-		err := estimatesProductions.Decode(&modelEstimatesProduction)
+		err := estimatesProductions.Decode(&estimateProduction)
 		if err != nil {
 			return nil, fmt.Errorf("error decode estimates productions: %v", err)
 		}
 
-		resultEstimatesProductions = append(resultEstimatesProductions, modelEstimatesProduction)
+		estimateFound, err := deepCopyObject(estimateProduction)
+		if err != nil {
+			return nil, fmt.Errorf("error deep copy object: %v", err)
+		}
+
+		resultEstimatesProductions = append(resultEstimatesProductions, estimateFound)
 	}
 
+	fmt.Printf("Result: %v", resultEstimatesProductions)
 	return resultEstimatesProductions, nil
+}
+
+func deepCopyObject(estimate models.EstimateModel) (models.EstimateModel, error) {
+	bytesEstimate, err := json.Marshal(estimate)
+	if err != nil {
+		return models.EstimateModel{}, fmt.Errorf("error marshal: %v", err)
+	}
+
+	var copyEstimates models.EstimateModel
+	err = json.Unmarshal(bytesEstimate, &copyEstimates)
+	if err != nil {
+		return models.EstimateModel{}, fmt.Errorf("error unmarshal: %v", err)
+	}
+
+	return copyEstimates, nil
 }
