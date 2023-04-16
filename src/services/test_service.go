@@ -5,5 +5,5 @@ import (
 )
 
 func GetDataTest() {
-	 repositories.GetData()
+	repositories.GetData()
 }
