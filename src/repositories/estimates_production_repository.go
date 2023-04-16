@@ -90,6 +90,7 @@ func CreateNewEstimation(newEstimation models.EstimateModel) (models.EstimateMod
 func GetEstimatesPerHarvest(reqIds models.ReqIdsEstimates) ([]models.EstimateModel, error) {
 	var resultEstimatesProductions []models.EstimateModel
 	var estimateProduction models.EstimateModel
+
 	collection := database.Db.GetCollection("Estimates")
 	filter := bson.M{"_id": bson.M{"$in": reqIds.Ids}}
 
