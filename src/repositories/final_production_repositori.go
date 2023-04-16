@@ -10,6 +10,7 @@ import (
 
 	"AgroXpert-Backend/src/database"
 	"AgroXpert-Backend/src/models"
+	"AgroXpert-Backend/src/utils"
 )
 
 func GetAllFinalProductions() ([]models.FinalProduction, error) {
@@ -29,13 +30,19 @@ func GetAllFinalProductions() ([]models.FinalProduction, error) {
 			return nil, fmt.Errorf("error decode final productions: %v", err)
 		}
 
-		resultFinalProductions = append(resultFinalProductions, modelFinalProduction)
+		var finalProdCopy models.FinalProduction
+		err = utils.DeepCopy(modelFinalProduction, &finalProdCopy)
+		if err != nil {
+			return nil, fmt.Errorf("error deep copy object: %v", err)
+		}
+
+		resultFinalProductions = append(resultFinalProductions, finalProdCopy)
 	}
 
 	return resultFinalProductions, nil
 }
 
-func  GetOneFinalProduction(finalProductionID string) (models.FinalProduction, error) {
+func GetOneFinalProduction(finalProductionID string) (models.FinalProduction, error) {
 	var modelFinalProduction models.FinalProduction
 	collection := database.Db.GetCollection("FinalProduction")
 

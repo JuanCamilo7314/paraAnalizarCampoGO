@@ -2,7 +2,6 @@ package repositories
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -11,6 +10,7 @@ import (
 
 	"AgroXpert-Backend/src/database"
 	"AgroXpert-Backend/src/models"
+	"AgroXpert-Backend/src/utils"
 )
 
 func GetAllEstimatesProductions() ([]models.EstimateModel, error) {
@@ -30,7 +30,13 @@ func GetAllEstimatesProductions() ([]models.EstimateModel, error) {
 			return nil, fmt.Errorf("error decode estimates productions: %v", err)
 		}
 
-		resultEstimatesProductions = append(resultEstimatesProductions, modelEstimatesProduction)
+		var estimateFound models.EstimateModel
+		err = utils.DeepCopy(modelEstimatesProduction, &estimateFound)
+		if err != nil {
+			return nil, fmt.Errorf("error deep copy object: %v", err)
+		}
+
+		resultEstimatesProductions = append(resultEstimatesProductions, estimateFound)
 	}
 
 	return resultEstimatesProductions, nil
@@ -98,7 +104,8 @@ func GetEstimatesPerHarvest(reqIds models.ReqIdsEstimates) ([]models.EstimateMod
 			return nil, fmt.Errorf("error decode estimates productions: %v", err)
 		}
 
-		estimateFound, err := deepCopyObject(estimateProduction)
+		var estimateFound models.EstimateModel
+		err = utils.DeepCopy(estimateProduction, &estimateFound)
 		if err != nil {
 			return nil, fmt.Errorf("error deep copy object: %v", err)
 		}
@@ -107,19 +114,4 @@ func GetEstimatesPerHarvest(reqIds models.ReqIdsEstimates) ([]models.EstimateMod
 	}
 
 	return resultEstimatesProductions, nil
-}
-
-func deepCopyObject(estimate models.EstimateModel) (models.EstimateModel, error) {
-	bytesEstimate, err := json.Marshal(estimate)
-	if err != nil {
-		return models.EstimateModel{}, fmt.Errorf("error marshal: %v", err)
-	}
-
-	var copyEstimates models.EstimateModel
-	err = json.Unmarshal(bytesEstimate, &copyEstimates)
-	if err != nil {
-		return models.EstimateModel{}, fmt.Errorf("error unmarshal: %v", err)
-	}
-
-	return copyEstimates, nil
 }
