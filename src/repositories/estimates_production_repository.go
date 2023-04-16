@@ -106,7 +106,6 @@ func GetEstimatesPerHarvest(reqIds models.ReqIdsEstimates) ([]models.EstimateMod
 		resultEstimatesProductions = append(resultEstimatesProductions, estimateFound)
 	}
 
-	fmt.Printf("Result: %v", resultEstimatesProductions)
 	return resultEstimatesProductions, nil
 }
 
