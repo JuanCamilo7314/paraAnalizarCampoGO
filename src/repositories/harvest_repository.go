@@ -75,12 +75,10 @@ func GetHarvestsByFarmLotID(FarmLotID string) ([]models.Harvest, error) {
 	}
 
 	for harvest.Next(context.Background()) {
-		// fmt.Printf("harvest: %v" + harvest.Current.String())
 		err := harvest.Decode(&modelHarvest)
 		if err != nil {
 			return nil, fmt.Errorf("error decode harvest: %v", err)
 		}
-		fmt.Printf("modelHarvest: %v ", modelHarvest.Estimates)
 		resultHarvest = append(resultHarvest, modelHarvest)
 	}
 
