@@ -27,4 +27,5 @@ func SetupRoutes(app *fiber.App) {
 	routes.FarmLotRoutes(app)
 	routes.HarvestRoutes(app)
 	routes.EstimatesProductionRoutes(app)
+	routes.GraphsRoutes(app)
 }

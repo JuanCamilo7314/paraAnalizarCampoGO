@@ -15,3 +15,14 @@ type Harvest struct {
 	Estimates              []primitive.ObjectID `bson:"estimates ,omitempty" json:"estimates ,omitempty"`
 	SummaryFinalProduction primitive.ObjectID   `bson:"summaryFinalProduction,omitempty" json:"summaryFinalProduction,omitempty"`
 }
+
+type HarvestGraph struct {
+	Type            string `bson:"type,omitempty" json:"type,omitempty"`
+	Year            int    `bson:"year,omitempty" json:"year,omitempty"`
+	TotalProduction int    `bson:"totalProduction,omitempty" json:"totalProduction,omitempty"`
+}
+
+type ProductionGraph struct {
+	TotalProduction int       `bson:"totalProduction,omitempty" json:"totalProduction,omitempty"`
+	Date            time.Time `bson:"date,omitempty" json:"date,omitempty"`
+}

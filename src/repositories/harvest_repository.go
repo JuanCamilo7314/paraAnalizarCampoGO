@@ -45,8 +45,8 @@ func GetOneHarvest(HarvestID string) (models.Harvest, error) {
 	}
 
 	filter := bson.M{"_id": id}
-	Harvest := collection.FindOne(context.Background(), filter)
-	err = Harvest.Decode(&modelHarvest)
+	harvest := collection.FindOne(context.Background(), filter)
+	err = harvest.Decode(&modelHarvest)
 	if err == mongo.ErrNoDocuments {
 		return models.Harvest{}, err
 	}
