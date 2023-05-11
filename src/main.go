@@ -22,7 +22,6 @@ func main() {
 }
 
 func SetupRoutes(app *fiber.App) {
-	routes.TestRoutes(app)
 	routes.FinalProductionRoutes(app)
 	routes.FarmLotRoutes(app)
 	routes.HarvestRoutes(app)
