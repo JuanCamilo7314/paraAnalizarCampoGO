@@ -68,7 +68,16 @@ func GetOneFinalProduction(finalProductionID string) (models.FinalProduction, er
 func PostNewFinalProduction(finalProductionReq models.FinalProduction) (models.FinalProduction, error) {
 	collection := database.Db.GetCollection("FinalProduction")
 
-	result, err := collection.InsertOne(context.Background(), finalProductionReq)
+	mapNewFinalProduction := bson.M{
+		"date":            finalProductionReq.Date,
+		"totalProduction": finalProductionReq.TotalProduction,
+		"exportMarket":    finalProductionReq.ExportMarket,
+		"nationalMarket":  finalProductionReq.NationalMarket,
+		"waste":           finalProductionReq.Waste,
+		"caliberDivision": finalProductionReq.CaliberDivision,
+	}
+
+	result, err := collection.InsertOne(context.Background(), mapNewFinalProduction)
 	if err != nil {
 		return models.FinalProduction{}, fmt.Errorf("error insert final production: %v", err)
 	}
