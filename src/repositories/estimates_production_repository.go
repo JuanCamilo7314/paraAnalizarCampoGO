@@ -67,17 +67,7 @@ func GetOneEstimatesProduction(estimatesProductionID string) (models.EstimateMod
 
 func CreateNewEstimation(newEstimation models.EstimateModel) (models.EstimateModel, error) {
 	collection := database.Db.GetCollection("Estimates")
-
-	mapNewEstimacion := bson.M{
-		"date":                 newEstimation.Date,
-		"numTrees":             newEstimation.NumTrees,
-		"totalFruitsEstimates": newEstimation.TotalFruitsEstimates,
-		"averageFruits":        newEstimation.AverageFruits,
-		"estimatedProduction":  newEstimation.EstimatedProduction,
-		"treesAssessed":        newEstimation.TreesAssessed,
-	}
-
-	result, err := collection.InsertOne(context.Background(), mapNewEstimacion)
+	result, err := collection.InsertOne(context.Background(), newEstimation)
 	if err != nil {
 		return models.EstimateModel{}, fmt.Errorf("error insert new estimation: %v", err)
 	}

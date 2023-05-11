@@ -64,3 +64,16 @@ func GetOneFinalProduction(finalProductionID string) (models.FinalProduction, er
 
 	return modelFinalProduction, nil
 }
+
+func PostNewFinalProduction(finalProductionReq models.FinalProduction) (models.FinalProduction, error) {
+	collection := database.Db.GetCollection("FinalProduction")
+
+	result, err := collection.InsertOne(context.Background(), finalProductionReq)
+	if err != nil {
+		return models.FinalProduction{}, fmt.Errorf("error insert final production: %v", err)
+	}
+
+	finalProductionReq.ID = result.InsertedID.(primitive.ObjectID)
+
+	return finalProductionReq, nil
+}

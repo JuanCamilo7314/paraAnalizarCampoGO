@@ -84,3 +84,21 @@ func GetHarvestsByFarmLotID(FarmLotID string) ([]models.Harvest, error) {
 
 	return resultHarvest, nil
 }
+
+func UpdateSummaryFinalProduction(idHarvest string, idFinalProduction primitive.ObjectID) error {
+	collection := database.Db.GetCollection("Harvest")
+
+	idHarvestUpdate, err := primitive.ObjectIDFromHex(idHarvest)
+	if err != nil {
+		return fmt.Errorf("error convert id: %v", err)
+	}
+
+	filter := bson.M{"_id": idHarvestUpdate}
+	update := bson.M{"$set": bson.M{"summaryFinalProduction": idFinalProduction}}
+	_, err = collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		return fmt.Errorf("error update summary final production: %v", err)
+	}
+
+	return nil
+}
