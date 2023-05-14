@@ -57,3 +57,35 @@ func GetOneFarmLot(FarmLotID string) (models.FarmLot, error) {
 
 	return modelFarmLot, nil
 }
+
+func CreateFarmLot(farmLotReq models.FarmLotReq) (models.FarmLotReq, error) {
+	collection := database.Db.GetCollection("FarmLot")
+
+	mapNewFarmLot := bson.M{
+		"nameLot":     farmLotReq.NameLot,
+		"numberTrees": farmLotReq.NumberTrees,
+		"treesAge":    farmLotReq.TreesAge,
+		"productionDate": bson.M{
+			"primary": bson.M{
+				"initial": farmLotReq.ProductionDate.Primary.Initial + "Z",
+				"final":   farmLotReq.ProductionDate.Primary.Final + "Z",
+			},
+			"secondary": bson.M{
+				"initial": farmLotReq.ProductionDate.Secondary.Initial + "Z",
+				"final":   farmLotReq.ProductionDate.Secondary.Final + "Z",
+			},
+		},
+		"averageFruitWeight": farmLotReq.AverageFruitWeight,
+	}
+
+	result, err := collection.InsertOne(context.Background(), mapNewFarmLot)
+	if err != nil {
+		return models.FarmLotReq{}, fmt.Errorf("error insert farm lot: %v", err)
+	}
+
+	id := result.InsertedID.(primitive.ObjectID)
+	farmLotReq.ID = id
+
+	return farmLotReq, nil
+
+}

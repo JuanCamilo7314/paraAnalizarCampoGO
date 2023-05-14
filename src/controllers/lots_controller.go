@@ -56,3 +56,36 @@ func GetOneFarmLot(c *fiber.Ctx) error {
 		Data:    finalProduction,
 	})
 }
+
+func CreateFarmLot(c *fiber.Ctx) error {
+	var farmLotReq models.FarmLotReq
+
+	if err := c.BodyParser(&farmLotReq); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+	}
+
+	// if err := farmLotReq.ValidateFarmLot(); err != nil {
+	// 	return c.Status(fiber.StatusBadRequest).JSON(models.Response{
+	// 		Success: false,
+	// 		Message: err.Error(),
+	// 	})
+	// }
+
+	farmLotResult, err := services.CreateFarmLot(farmLotReq)
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(models.Response{
+		Success: true,
+		Message: "Farm Lot successfully",
+		Data:    farmLotResult,
+	})
+}
