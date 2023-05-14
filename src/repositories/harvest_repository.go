@@ -89,10 +89,11 @@ func CreateHarvest(harvestReq models.CreateHarvest) (models.CreateHarvest, error
 	collection := database.Db.GetCollection("Harvest")
 
 	mapNewFarmLot := bson.M{
-		"type":                harvestReq.Type,
-		"idFarmLot":           harvestReq.IDFarmLot,
-		"evaluationStartDate": harvestReq.EvaluationStartDate + "Z",
-		"evaluationEndDate":   harvestReq.EvaluationEndDate + "Z",
+		"type":                   harvestReq.Type,
+		"idFarmLot":              harvestReq.IDFarmLot,
+		"evaluationStartDate":    harvestReq.EvaluationStartDate + "Z",
+		"evaluationEndDate":      harvestReq.EvaluationEndDate + "Z",
+		"summaryFinalProduction": nil,
 	}
 
 	result, err := collection.InsertOne(context.Background(), mapNewFarmLot)
