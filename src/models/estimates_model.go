@@ -52,6 +52,6 @@ func (estimate *EstimateModel) setEstimateProduction(fruitWeight float32) {
 }
 
 func (estimate *EstimateModel) calculateNumFruitsPerTree(treesAssese TreesAssessed) int {
-	fruitPerTree := float64(treesAssese.NumFruits) * float64(4.0/treesAssese.NumQuartiles)
+	fruitPerTree := float64(treesAssese.NumFruits) * 4.0 / float64(treesAssese.NumQuartiles)
 	return int(math.Round(fruitPerTree))
 }
