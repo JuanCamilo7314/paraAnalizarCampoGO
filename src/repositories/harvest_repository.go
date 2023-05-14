@@ -85,6 +85,29 @@ func GetHarvestsByFarmLotID(FarmLotID string) ([]models.Harvest, error) {
 	return resultHarvest, nil
 }
 
+func CreateHarvest(harvestReq models.CreateHarvest) (models.CreateHarvest, error) {
+	collection := database.Db.GetCollection("Harvest")
+
+	mapNewFarmLot := bson.M{
+		"type":                   harvestReq.Type,
+		"idFarmLot":              harvestReq.IDFarmLot,
+		"evaluationStartDate":    harvestReq.EvaluationStartDate + "Z",
+		"evaluationEndDate":      harvestReq.EvaluationEndDate + "Z",
+		"summaryFinalProduction": nil,
+	}
+
+	result, err := collection.InsertOne(context.Background(), mapNewFarmLot)
+	if err != nil {
+		return models.CreateHarvest{}, fmt.Errorf("error insert farm lot: %v", err)
+	}
+
+	id := result.InsertedID.(primitive.ObjectID)
+	harvestReq.ID = id
+
+	return harvestReq, nil
+
+}
+
 func UpdateSummaryFinalProduction(idHarvest string, idFinalProduction primitive.ObjectID) error {
 	collection := database.Db.GetCollection("Harvest")
 

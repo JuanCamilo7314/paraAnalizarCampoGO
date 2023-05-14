@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -25,4 +26,33 @@ type HarvestGraph struct {
 type ProductionGraph struct {
 	TotalProduction int       `bson:"totalProduction,omitempty" json:"totalProduction,omitempty"`
 	Date            time.Time `bson:"date,omitempty" json:"date,omitempty"`
+}
+
+type CreateHarvest struct {
+	ID                  primitive.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	Type                string             `bson:"type,omitempty" json:"type,omitempty"`
+	IDFarmLot           primitive.ObjectID `bson:"idFarmLot,omitempty" json:"idFarmLot,omitempty"`
+	EvaluationStartDate string             `bson:"evaluationStartDate,omitempty" json:"evaluationStartDate,omitempty"`
+	EvaluationEndDate   string             `bson:"evaluationEndDate,omitempty" json:"evaluationEndDate,omitempty"`
+}
+
+func (req *CreateHarvest) ValidateHarvest() error {
+
+	if req.Type == "" {
+		return errors.New("Type is required")
+	}
+
+	if req.IDFarmLot.String() == "" {
+		return errors.New("IDFarmLot is required")
+	}
+
+	if req.EvaluationStartDate == "" {
+		return errors.New("EvaluationStartDate is required")
+	}
+
+	if req.EvaluationEndDate == "" {
+		return errors.New("EvaluationEndDate is required")
+	}
+
+	return nil
 }
