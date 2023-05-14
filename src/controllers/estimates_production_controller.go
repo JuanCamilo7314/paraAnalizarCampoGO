@@ -75,7 +75,6 @@ func PostNewEstimate(c *fiber.Ctx) error {
 	}
 
 	estimateResult, err := services.CreateEstimate(estimateReq)
-
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(models.Response{
 			Success: false,

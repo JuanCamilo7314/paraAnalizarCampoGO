@@ -94,6 +94,7 @@ func CreateHarvest(harvestReq models.CreateHarvest) (models.CreateHarvest, error
 		"evaluationStartDate":    harvestReq.EvaluationStartDate + "Z",
 		"evaluationEndDate":      harvestReq.EvaluationEndDate + "Z",
 		"summaryFinalProduction": nil,
+		"estimates":              []primitive.ObjectID{},
 	}
 
 	result, err := collection.InsertOne(context.Background(), mapNewFarmLot)
@@ -105,7 +106,6 @@ func CreateHarvest(harvestReq models.CreateHarvest) (models.CreateHarvest, error
 	harvestReq.ID = id
 
 	return harvestReq, nil
-
 }
 
 func UpdateSummaryFinalProduction(idHarvest string, idFinalProduction primitive.ObjectID) error {
@@ -122,6 +122,29 @@ func UpdateSummaryFinalProduction(idHarvest string, idFinalProduction primitive.
 	if err != nil {
 		return fmt.Errorf("error update summary final production: %v", err)
 	}
+
+	return nil
+}
+
+func UpdateEstimates(idHarvest string, idNewEstimate primitive.ObjectID) error {
+	collection := database.Db.GetCollection("Harvest")
+	//var updateHarvest models.Harvest
+
+	idHarvestUpdate, err := primitive.ObjectIDFromHex(idHarvest)
+	if err != nil {
+		return fmt.Errorf("error convert id: %v", err)
+	}
+
+	filter := bson.M{"_id": idHarvestUpdate}
+	update := bson.M{
+		"$push": bson.M{"estimates": idNewEstimate},
+	}
+	result, err := collection.UpdateByID(context.Background(), filter, update)
+	if err != nil {
+		return fmt.Errorf("error update estimates harvest : %v", err)
+	}
+
+	fmt.Printf("Documents modified: %v\n", result.UpsertedID)
 
 	return nil
 }

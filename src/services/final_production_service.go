@@ -14,15 +14,12 @@ func GetOneFinalProduction(finalProductionID string) (models.FinalProduction, er
 }
 
 func PostNewFinalProduction(finalProductionReq models.FinalProduction, idHarvest string) (models.FinalProduction, error) {
-
 	newFinalProduction, err := repositories.PostNewFinalProduction(finalProductionReq)
-
 	if err != nil {
 		return models.FinalProduction{}, err
 	}
 
 	err = repositories.UpdateSummaryFinalProduction(idHarvest, newFinalProduction.ID)
-
 	if err != nil {
 		return models.FinalProduction{}, err
 	}
