@@ -128,7 +128,6 @@ func UpdateSummaryFinalProduction(idHarvest string, idFinalProduction primitive.
 
 func UpdateEstimates(idHarvest string, idNewEstimate primitive.ObjectID) error {
 	collection := database.Db.GetCollection("Harvest")
-	//var updateHarvest models.Harvest
 
 	idHarvestUpdate, err := primitive.ObjectIDFromHex(idHarvest)
 	if err != nil {
@@ -137,11 +136,19 @@ func UpdateEstimates(idHarvest string, idNewEstimate primitive.ObjectID) error {
 
 	filter := bson.M{"_id": idHarvestUpdate}
 	update := bson.M{
-		"$push": bson.M{"estimates": idNewEstimate},
+		"$addToSet": bson.M{"estimates": idNewEstimate},
 	}
-	result, err := collection.UpdateByID(context.Background(), filter, update)
+
+	find, err := GetOneHarvest(idHarvest)
 	if err != nil {
-		return fmt.Errorf("error update estimates harvest : %v", err)
+		fmt.Printf("error find harvest: %v, /n", err)
+	} else {
+		fmt.Printf("find: %v", find)
+	}
+
+	result, err := collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		return fmt.Errorf("error update estimates harvest : %v /n", err)
 	}
 
 	fmt.Printf("Documents modified: %v\n", result.UpsertedID)
