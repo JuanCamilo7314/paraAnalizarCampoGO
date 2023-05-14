@@ -15,6 +15,10 @@ func GetOneHarvest(HarvestID string) (models.Harvest, error) {
 	return repositories.GetOneHarvest(HarvestID)
 }
 
+func CreateHarvest(harvestReq models.CreateHarvest) (models.CreateHarvest, error) {
+	return repositories.CreateHarvest(harvestReq)
+}
+
 func GetHistoricHarvestEsimation(FarmLotID string) ([]models.HistoricHarvest, error) {
 	var historic []models.HistoricHarvest
 	var estimates []models.EstimateModel

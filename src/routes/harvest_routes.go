@@ -12,4 +12,5 @@ func HarvestRoutes(app *fiber.App) {
 	route.Get("/", controllers.GetAllHarvests)
 	route.Get("/:id", controllers.GetOneHarvest)
 	route.Get("/historic/:idFarmLot", controllers.GetHistoricHarvestEsimation)
+	route.Post("/", controllers.CreateHarvest)
 }
