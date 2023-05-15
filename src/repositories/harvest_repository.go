@@ -36,6 +36,7 @@ func GetAllHarvests() ([]models.Harvest, error) {
 }
 
 func GetOneHarvest(HarvestID string) (models.Harvest, error) {
+	fmt.Println("harvestID: ", HarvestID)
 	var modelHarvest models.Harvest
 	collection := database.Db.GetCollection("Harvest")
 
@@ -128,30 +129,43 @@ func UpdateSummaryFinalProduction(idHarvest string, idFinalProduction primitive.
 
 func UpdateEstimates(idHarvest string, idNewEstimate primitive.ObjectID) error {
 	collection := database.Db.GetCollection("Harvest")
+	var modelHarvest models.Harvest
 
 	idHarvestUpdate, err := primitive.ObjectIDFromHex(idHarvest)
 	if err != nil {
 		return fmt.Errorf("error convert id: %v", err)
 	}
-
+	fmt.Printf("idHarvestUpdate: %v", idHarvestUpdate)
 	filter := bson.M{"_id": idHarvestUpdate}
 	update := bson.M{
 		"$addToSet": bson.M{"estimates": idNewEstimate},
 	}
 
-	find, err := GetOneHarvest(idHarvest)
-	if err != nil {
-		fmt.Printf("error find harvest: %v, /n", err)
-	} else {
-		fmt.Printf("find: %v", find)
+	// find, err := GetOneHarvest(idHarvest)
+	// if err != nil {
+	// 	fmt.Printf("error find harvest: %v,", err)
+	// } else {
+	// 	fmt.Printf("find: %v", find)
+	// }
+
+	harvest := collection.FindOne(context.Background(), filter)
+	err = harvest.Decode(&modelHarvest)
+	if err == mongo.ErrNoDocuments {
+		fmt.Printf("error decode harvest: %v", err)
 	}
+
+	if err != nil {
+		fmt.Printf("error decode harvest: %v", err)
+	}
+
+	fmt.Printf("modelHarvest: %v", modelHarvest)
 
 	result, err := collection.UpdateOne(context.Background(), filter, update)
 	if err != nil {
-		return fmt.Errorf("error update estimates harvest : %v /n", err)
+		return fmt.Errorf("error update estimates harvest : %v ", err)
 	}
 
-	fmt.Printf("Documents modified: %v\n", result.UpsertedID)
+	fmt.Printf("Documents modified: %v", result.UpsertedID)
 
 	return nil
 }
