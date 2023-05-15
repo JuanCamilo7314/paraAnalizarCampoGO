@@ -129,36 +129,16 @@ func UpdateSummaryFinalProduction(idHarvest string, idFinalProduction primitive.
 
 func UpdateEstimatesHarvest(idHarvest string, idNewEstimate primitive.ObjectID) error {
 	collection := database.Db.GetCollection("Harvest")
-	var modelHarvest models.Harvest
 
 	idHarvestUpdate, err := primitive.ObjectIDFromHex(idHarvest)
 	if err != nil {
 		return fmt.Errorf("error convert id: %v", err)
 	}
-	fmt.Printf("idHarvestUpdate: %v", idHarvestUpdate)
+
 	filter := bson.M{"_id": idHarvestUpdate}
 	update := bson.M{
-		"$addToSet": bson.M{"estimates": idNewEstimate},
+		"$push": bson.M{"estimates": idNewEstimate},
 	}
-
-	// find, err := GetOneHarvest(idHarvest)
-	// if err != nil {
-	// 	fmt.Printf("error find harvest: %v,", err)
-	// } else {
-	// 	fmt.Printf("find: %v", find)
-	// }
-
-	harvest := collection.FindOne(context.Background(), filter)
-	err = harvest.Decode(&modelHarvest)
-	if err == mongo.ErrNoDocuments {
-		fmt.Printf("error decode harvest: %v", err)
-	}
-
-	if err != nil {
-		fmt.Printf("error decode harvest: %v", err)
-	}
-
-	fmt.Printf("modelHarvest: %v", modelHarvest)
 
 	result, err := collection.UpdateOne(context.Background(), filter, update)
 	if err != nil {
