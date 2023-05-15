@@ -69,7 +69,7 @@ func PostNewFinalProduction(finalProductionReq models.FinalProduction) (models.F
 	collection := database.Db.GetCollection("FinalProduction")
 
 	mapNewFinalProduction := bson.M{
-		"date":            finalProductionReq.Date,
+		"date":            finalProductionReq.Date + "Z",
 		"totalProduction": finalProductionReq.TotalProduction,
 		"exportMarket":    finalProductionReq.ExportMarket,
 		"nationalMarket":  finalProductionReq.NationalMarket,

@@ -1,14 +1,12 @@
 package models
 
 import (
-	"time"
-
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type FinalProduction struct {
 	ID              primitive.ObjectID `bson:"_id" json:"id"`
-	Date            time.Time          `bson:"date" json:"date"`
+	Date            string             `bson:"date" json:"date"`
 	TotalProduction int                `bson:"totalProduction" json:"totalProduction"`
 	ExportMarket    int                `bson:"exportMarket" json:"exportMarket"`
 	NationalMarket  int                `bson:"nationalMarket" json:"nationalMarket"`
