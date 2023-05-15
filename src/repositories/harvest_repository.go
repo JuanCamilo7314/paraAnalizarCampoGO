@@ -140,12 +140,10 @@ func UpdateEstimatesHarvest(idHarvest string, idNewEstimate primitive.ObjectID) 
 		"$push": bson.M{"estimates": idNewEstimate},
 	}
 
-	result, err := collection.UpdateOne(context.Background(), filter, update)
+	_, err = collection.UpdateOne(context.Background(), filter, update)
 	if err != nil {
 		return fmt.Errorf("error update estimates harvest : %v ", err)
 	}
-
-	fmt.Printf("Documents modified: %v", result.UpsertedID)
 
 	return nil
 }
