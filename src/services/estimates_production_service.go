@@ -27,7 +27,7 @@ func CreateEstimate(estimateReq models.ReqEstimate) (models.EstimateModel, error
 		return models.EstimateModel{}, err
 	}
 
-	err = repositories.UpdateEstimates(estimateReq.IdFarmLot, estimateCreated.ID)
+	err = repositories.UpdateEstimatesHarvest(estimateReq.IdFarmLot, estimateCreated.ID)
 	if err != nil {
 		return models.EstimateModel{}, err
 	}

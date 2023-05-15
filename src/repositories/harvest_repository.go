@@ -127,7 +127,7 @@ func UpdateSummaryFinalProduction(idHarvest string, idFinalProduction primitive.
 	return nil
 }
 
-func UpdateEstimates(idHarvest string, idNewEstimate primitive.ObjectID) error {
+func UpdateEstimatesHarvest(idHarvest string, idNewEstimate primitive.ObjectID) error {
 	collection := database.Db.GetCollection("Harvest")
 	var modelHarvest models.Harvest
 
