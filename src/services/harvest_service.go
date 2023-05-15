@@ -45,8 +45,6 @@ func GetHistoricHarvestEsimation(FarmLotID string) ([]models.HistoricHarvest, er
 					estimates = []models.EstimateModel{}
 				}
 
-				finalProduction, err = repositories.GetOneFinalProduction(string(harvests[i].SummaryFinalProduction.Hex()))
-
 				if err != nil {
 					finalProduction = models.FinalProduction{}
 				}

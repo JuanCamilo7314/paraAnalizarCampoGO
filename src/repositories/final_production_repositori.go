@@ -43,6 +43,7 @@ func GetAllFinalProductions() ([]models.FinalProduction, error) {
 }
 
 func GetOneFinalProduction(finalProductionID string) (models.FinalProduction, error) {
+	fmt.Print(finalProductionID)
 	var modelFinalProduction models.FinalProduction
 	collection := database.Db.GetCollection("FinalProduction")
 
