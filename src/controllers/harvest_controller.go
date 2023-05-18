@@ -92,7 +92,8 @@ func CreateHarvest(c *fiber.Ctx) error {
 
 func GetHistoricHarvestEsimation(c *fiber.Ctx) error {
 	FarmLotID := c.Params("idFarmLot")
-	HistoricHarvest, err := services.GetHistoricHarvestEsimation(FarmLotID)
+	historicHarvest, err := services.GetHistoricHarvestEsimation(FarmLotID)
+	//fmt.Printf("%+v", historicHarvest)
 
 	if err == mongo.ErrNoDocuments {
 		return c.Status(fiber.StatusNotFound).JSON(models.Response{
@@ -111,6 +112,6 @@ func GetHistoricHarvestEsimation(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(models.Response{
 		Success: true,
 		Message: "Historic Harvest successfully",
-		Data:    HistoricHarvest,
+		Data:    historicHarvest,
 	})
 }

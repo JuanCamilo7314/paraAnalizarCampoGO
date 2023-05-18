@@ -13,7 +13,7 @@ type Harvest struct {
 	IDFarmLot              primitive.ObjectID   `bson:"idFarmLot,omitempty" json:"idFarmLot,omitempty"`
 	EvaluationStartDate    time.Time            `bson:"evaluationStartDate,omitempty" json:"evaluationStartDate,omitempty"`
 	EvaluationEndDate      time.Time            `bson:"evaluationEndDate,omitempty" json:"evaluationEndDate,omitempty"`
-	Estimates              []primitive.ObjectID `bson:"estimates ,omitempty" json:"estimates ,omitempty"`
+	Estimates              []primitive.ObjectID `bson:"estimates,omitempty" json:"estimates,omitempty"`
 	SummaryFinalProduction primitive.ObjectID   `bson:"summaryFinalProduction,omitempty" json:"summaryFinalProduction,omitempty"`
 }
 
