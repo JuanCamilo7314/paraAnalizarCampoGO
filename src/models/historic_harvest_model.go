@@ -5,3 +5,7 @@ type HistoricHarvest struct {
 	Estimates       []EstimateModel `json:"estimates"`
 	FinalProduction FinalProduction `json:"finalProduction"`
 }
+
+type HistoricHarvestPipeline struct {
+	Harvest []HarvestDetails `json:"harvest"`
+}
