@@ -39,7 +39,7 @@ func (req *ReqEstimate) validateTressInfo() error {
 			return errors.New("Number Fruits must be greater than 0")
 		}
 
-		if tree.NumQuartiles <= 0 && tree.NumQuartiles > 4 {
+		if tree.NumQuartiles <= 0 || tree.NumQuartiles > 4 {
 			return errors.New("Number of Quartiles must be greater than 0 and less than 4")
 		}
 	}
