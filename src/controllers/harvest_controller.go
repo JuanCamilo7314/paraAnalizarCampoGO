@@ -93,7 +93,6 @@ func CreateHarvest(c *fiber.Ctx) error {
 func GetHistoricHarvestEsimation(c *fiber.Ctx) error {
 	FarmLotID := c.Params("idFarmLot")
 	historicHarvest, err := services.GetHistoricHarvestEsimation(FarmLotID)
-	//fmt.Printf("%+v", historicHarvest)
 
 	if err == mongo.ErrNoDocuments {
 		return c.Status(fiber.StatusNotFound).JSON(models.Response{
