@@ -147,3 +147,69 @@ func UpdateEstimatesHarvest(idHarvest string, idNewEstimate primitive.ObjectID) 
 
 	return nil
 }
+
+func GetHistoricHarvestEsimation(FarmLotID string) ([]models.HarvestDetails, error) {
+	var resultHarvest []models.HarvestDetails
+	var modelHarvestDetails models.HarvestDetails
+
+	collection := database.Db.GetCollection("Harvest")
+	id, err := primitive.ObjectIDFromHex(FarmLotID)
+
+	pipelineHistoric := []bson.M{
+		{
+			"$match": bson.M{
+				"idFarmLot": id,
+			},
+		},
+		{
+			"$lookup": bson.M{
+				"from": "Estimates",
+				"let":  bson.M{"idsEstimates": "$estimates"},
+				"pipeline": []bson.M{
+					{"$match": bson.M{
+						"$expr": bson.M{
+							"$in": []string{"$_id", "$$idsEstimates"},
+						},
+					},
+					},
+				},
+				"as": "estimates",
+			},
+		},
+		{
+			"$lookup": bson.M{
+				"from":         "FinalProduction",
+				"localField":   "summaryFinalProduction",
+				"foreignField": "_id",
+				"as":           "summaryFinalProduction",
+			},
+		},
+
+		{
+			"$unwind": "$summaryFinalProduction",
+		},
+	}
+
+	historic, err := collection.Aggregate(context.Background(), pipelineHistoric)
+	err = historic.Decode(&modelHarvestDetails)
+
+	if err == mongo.ErrNoDocuments {
+		return []models.HarvestDetails{}, err
+	}
+
+	for historic.Next(context.Background()) {
+		var lookup models.HarvestDetails
+		err := historic.Decode(&lookup)
+		if err != nil {
+			return nil, err
+		}
+		resultHarvest = append(resultHarvest, lookup)
+	}
+
+	if err := historic.Err(); err != nil {
+		return nil, err
+	}
+
+	return resultHarvest, nil
+
+}
