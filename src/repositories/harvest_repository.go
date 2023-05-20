@@ -194,7 +194,15 @@ func GetHistoricHarvestEsimation(FarmLotID string) ([]models.HarvestDetails, err
 		},
 
 		{
-			"$unwind": "$summaryFinalProduction",
+			"$unwind": bson.M{
+				"path":                       "$summaryFinalProduction",
+				"preserveNullAndEmptyArrays": true,
+			},
+		},
+		{
+			"$addFields": bson.M{
+				"summaryFinalProduction": bson.M{"$ifNull": bson.A{"$summaryFinalProduction", nil}},
+			},
 		},
 	}
 
