@@ -36,7 +36,6 @@ func GetAllHarvests() ([]models.Harvest, error) {
 }
 
 func GetOneHarvest(HarvestID string) (models.Harvest, error) {
-	fmt.Println("harvestID: ", HarvestID)
 	var modelHarvest models.Harvest
 	collection := database.Db.GetCollection("Harvest")
 
@@ -71,6 +70,15 @@ func GetHarvestsByFarmLotID(FarmLotID string) ([]models.Harvest, error) {
 
 	filter := bson.M{"idFarmLot": id}
 	harvest, err := collection.Find(context.Background(), filter)
+	collection.Aggregate(context.Background(), []bson.M{
+		{"$match": bson.M{"idFarmLot": id}},
+		{"$lookup": bson.M{
+			"from":         "Estimate",
+			"localField":   "_id",
+			"foreignField": "idHarvest",
+			"as":           "estimates",
+		}},
+	})
 	if err != nil {
 		return nil, fmt.Errorf("error fiend all harvest: %v", err)
 	}
