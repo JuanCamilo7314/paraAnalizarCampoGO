@@ -61,29 +61,28 @@ func PostNewEstimate(c *fiber.Ctx) error {
 	var estimateReq models.ReqEstimate
 
 	if err := c.BodyParser(&estimateReq); err != nil {
-		return c.Status(400).JSON(models.Response{
+		return c.Status(fiber.StatusBadRequest).JSON(models.Response{
 			Success: false,
 			Message: err.Error(),
 		})
 	}
 
 	if err := estimateReq.ValidateEstimate(); err != nil {
-		return c.Status(400).JSON(models.Response{
+		return c.Status(fiber.StatusBadRequest).JSON(models.Response{
 			Success: false,
 			Message: err.Error(),
 		})
 	}
 
 	estimateResult, err := services.CreateEstimate(estimateReq)
-
 	if err != nil {
-		return c.Status(400).JSON(models.Response{
+		return c.Status(fiber.StatusBadRequest).JSON(models.Response{
 			Success: false,
 			Message: err.Error(),
 		})
 	}
 
-	return c.Status(200).JSON(models.Response{
+	return c.Status(fiber.StatusOK).JSON(models.Response{
 		Success: true,
 		Message: "Estimate created successfully",
 		Data:    estimateResult,

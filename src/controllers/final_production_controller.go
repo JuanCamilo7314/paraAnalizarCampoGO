@@ -56,3 +56,30 @@ func GetOneFinalProduction(c *fiber.Ctx) error {
 		Data:    finalProduction,
 	})
 }
+
+func PostNewFinalProduction(c *fiber.Ctx) error {
+	var harvestProductionID string = c.Params("idHarvest")
+	var newFinalProduction models.FinalProduction
+
+	if err := c.BodyParser(&newFinalProduction); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+	}
+
+	resultFinalProduction, err := services.PostNewFinalProduction(newFinalProduction, harvestProductionID)
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+	}
+
+	return c.Status(fiber.StatusCreated).JSON(models.Response{
+		Success: true,
+		Message: "Final Production successfully",
+		Data:    resultFinalProduction,
+	})
+}

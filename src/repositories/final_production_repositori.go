@@ -64,3 +64,25 @@ func GetOneFinalProduction(finalProductionID string) (models.FinalProduction, er
 
 	return modelFinalProduction, nil
 }
+
+func PostNewFinalProduction(finalProductionReq models.FinalProduction) (models.FinalProduction, error) {
+	collection := database.Db.GetCollection("FinalProduction")
+
+	mapNewFinalProduction := bson.M{
+		"date":            finalProductionReq.Date + "Z",
+		"totalProduction": finalProductionReq.TotalProduction,
+		"exportMarket":    finalProductionReq.ExportMarket,
+		"nationalMarket":  finalProductionReq.NationalMarket,
+		"waste":           finalProductionReq.Waste,
+		"caliberDivision": finalProductionReq.CaliberDivision,
+	}
+
+	result, err := collection.InsertOne(context.Background(), mapNewFinalProduction)
+	if err != nil {
+		return models.FinalProduction{}, fmt.Errorf("error insert final production: %v", err)
+	}
+
+	finalProductionReq.ID = result.InsertedID.(primitive.ObjectID)
+
+	return finalProductionReq, nil
+}

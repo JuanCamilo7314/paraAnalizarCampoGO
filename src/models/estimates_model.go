@@ -9,7 +9,7 @@ import (
 
 type EstimateModel struct {
 	ID                   primitive.ObjectID `json:"id" bson:"_id"`
-	Date                 time.Time          `json:"date" bson:"date"`
+	Date                 string             `json:"date" bson:"date"`
 	NumTrees             int                `json:"numTrees" bson:"numTrees"`
 	TotalFruitsEstimates int                `json:"totalFruitsEstimates" bson:"totalFruitsEstimates"`
 	AverageFruits        int                `json:"averageFruits" bson:"averageFruits"`
@@ -24,7 +24,7 @@ type TreesAssessed struct {
 
 func (estimate *EstimateModel) CreateEstimation(treesAssesed []TreesAssessed, infFarmLot FarmLot) {
 	estimate.NumTrees = len(treesAssesed)
-	estimate.Date = time.Now()
+	estimate.Date = time.Now().Format("2006-01-02 15:04:05.9999999")
 	estimate.setAverageFruitsPerTree(treesAssesed)
 	estimate.setTotalFruitsEstimates(infFarmLot.NumberTrees)
 	estimate.setEstimateProduction(infFarmLot.AverageFruitWeight)
@@ -52,6 +52,6 @@ func (estimate *EstimateModel) setEstimateProduction(fruitWeight float32) {
 }
 
 func (estimate *EstimateModel) calculateNumFruitsPerTree(treesAssese TreesAssessed) int {
-	fruitPerTree := float64(treesAssese.NumFruits) * float64(4.0/treesAssese.NumQuartiles)
+	fruitPerTree := float64(treesAssese.NumFruits) * 4.0 / float64(treesAssese.NumQuartiles)
 	return int(math.Round(fruitPerTree))
 }

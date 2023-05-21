@@ -57,9 +57,42 @@ func GetOneHarvest(c *fiber.Ctx) error {
 	})
 }
 
+func CreateHarvest(c *fiber.Ctx) error {
+	var harvestReq models.CreateHarvest
+
+	if err := c.BodyParser(&harvestReq); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+	}
+
+	if err := harvestReq.ValidateHarvest(); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+	}
+
+	harvestResult, err := services.CreateHarvest(harvestReq)
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+	}
+
+	return c.Status(fiber.StatusOK).JSON(models.Response{
+		Success: true,
+		Message: "Harvest successfully",
+		Data:    harvestResult,
+	})
+}
+
 func GetHistoricHarvestEsimation(c *fiber.Ctx) error {
 	FarmLotID := c.Params("idFarmLot")
-	HistoricHarvest, err := services.GetHistoricHarvestEsimation(FarmLotID)
+	historicHarvest, err := services.GetHistoricHarvestEsimation(FarmLotID)
 
 	if err == mongo.ErrNoDocuments {
 		return c.Status(fiber.StatusNotFound).JSON(models.Response{
@@ -78,6 +111,6 @@ func GetHistoricHarvestEsimation(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(models.Response{
 		Success: true,
 		Message: "Historic Harvest successfully",
-		Data:    HistoricHarvest,
+		Data:    historicHarvest,
 	})
 }

@@ -11,4 +11,5 @@ func FarmLotRoutes(app *fiber.App) {
 
 	route.Get("/", controllers.GetAllFarmLots)
 	route.Get("/:id", controllers.GetOneFarmLot)
+	route.Post("/", controllers.CreateFarmLot)
 }
