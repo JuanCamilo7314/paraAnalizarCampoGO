@@ -24,7 +24,7 @@ type TreesAssessed struct {
 
 func (estimate *EstimateModel) CreateEstimation(treesAssesed []TreesAssessed, infFarmLot FarmLot) {
 	estimate.NumTrees = len(treesAssesed)
-	estimate.Date = time.Now().String()
+	estimate.Date = time.Now().Format("2006-01-02 15:04:05.9999999")
 	estimate.setAverageFruitsPerTree(treesAssesed)
 	estimate.setTotalFruitsEstimates(infFarmLot.NumberTrees)
 	estimate.setEstimateProduction(infFarmLot.AverageFruitWeight)
