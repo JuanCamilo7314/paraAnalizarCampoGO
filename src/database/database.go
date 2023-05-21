@@ -21,6 +21,13 @@ type MongoDB struct {
 	database *mongo.Database
 }
 
+/*
+	InitMongoConnection initializes the connection to the MongoDB database.
+
+It utilizes the singleton pattern to ensure that only one connection is created.
+Once the connection is established, the function assigns the client and
+database objects to the global Db variable.
+*/
 func InitMongoConnection() {
 	urlDb := os.Getenv("DATABASE_URL")
 	nameDb := os.Getenv("DATABASE_NAME")
