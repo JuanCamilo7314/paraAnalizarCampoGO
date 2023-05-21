@@ -22,8 +22,7 @@ type MongoDB struct {
 }
 
 /*
-	InitMongoConnection initializes the connection to the MongoDB database.
-
+InitMongoConnection initializes the connection to the MongoDB database.
 It utilizes the singleton pattern to ensure that only one connection is created.
 Once the connection is established, the function assigns the client and
 database objects to the global Db variable.
